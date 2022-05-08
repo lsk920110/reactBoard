@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import List from "./list";
 import { Route,Routes,BrowserRouter as Router } from "react-router-dom";
+import axios from "axios";
 
 function WriteForm(props){
-    console.log(props);
+    //console.log(props);
     
     const [subject,setSubject] = useState('');
     const [content,setContent] = useState('');
@@ -19,10 +20,26 @@ function WriteForm(props){
     const reg_userChange =(e)=>{
         setReg_user(e.target.value);
     }    
-    const save =()=>{
-        //console.log(subject+content+reg_user);
-        props.setData([subject,content,reg_user]);
-        //console.log(props);
+    const save = async() =>{
+        //let config = {headers: { "Content-Type": 'application/json'}};
+        //let jsonData = {key1:"value1",key2:"value2"};
+        let params = {
+            "subject":subject,
+            "content":content,
+            "reg_user":reg_user
+        };
+        console.log(params);
+
+
+        let data = await axios({
+            method : 'post',
+            url : '/act/write',
+            //data : "asdasdasd",
+            data : params,
+            headers: {'Content-Type': 'application/json' }
+        });
+        console.log(data);
+
     }
 
 
@@ -50,12 +67,13 @@ function WriteForm(props){
             
             
             <br/>
-
+{/*             
             <Link to="/">
+            </Link> */}
+
             <input type="button" value="저장"
             onClick={save}
             />
-            </Link>
 
             <Link to="/">
                 <input type="button" value="목록"/>
