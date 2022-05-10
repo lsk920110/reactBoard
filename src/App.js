@@ -7,6 +7,7 @@ import Detail from './components/detail';
 import WriteForm from './components/writeForm';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import UpdateForm from './components/updateForm';
 
 
 function App(props) {
@@ -71,12 +72,14 @@ function App(props) {
             element={<List props={boardList}/>} 
             
             />
-            <Route path="/detail/:seq/:subject/:content" 
+            <Route path="/detail/:seq" 
             element={<Detail />}/>
             <Route path="/writeForm" element={<WriteForm 
             data={data}
             setData={setData}
             />} />
+            <Route path="/updateForm/:seq" element={<UpdateForm />} />
+
           </Routes>
         </Router>
       </div>

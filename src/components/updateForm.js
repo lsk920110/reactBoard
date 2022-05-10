@@ -4,7 +4,7 @@ import List from "./list";
 import { Route,Routes,BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
-function WriteForm(props){
+function UpdateForm(props){
     //console.log(props);
     
     const [subject,setSubject] = useState('');
@@ -82,4 +82,4 @@ function WriteForm(props){
 
 }
 
-export default WriteForm;
+export default UpdateForm;

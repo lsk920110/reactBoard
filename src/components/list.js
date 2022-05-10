@@ -1,9 +1,13 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../static/list.css";
 
 function List({props}) {
-    console.log(props);
+
+    const[boardList,setBoardList] = useState([]);
+
+    //console.log(props);
     /*
     const [boardList, setBoardList] = useState([]);
     useEffect(()=>{
@@ -24,7 +28,35 @@ function List({props}) {
         setBoardList(boardArray);
 
     },[]);
-*/
+    const listCall = async()=>{
+        let data = await axios({
+            method : 'post',
+            url : 'act/listCall',
+            headers : {'Content-Type':'application/json'}
+        });
+        setBoardList(data);
+        console.log(boardList);
+    }
+    */
+    //listCall();
+
+    
+    
+
+    useEffect(function(){
+        fetch("act/listCall")
+        .then((res)=>(res.json()))
+        .then((data)=>setBoardList(data))
+        ;
+
+        
+    }, []);
+
+
+
+
+
+
 
     return ( 
         <div>
@@ -41,12 +73,14 @@ function List({props}) {
                     </tr>
                 </thead>
                 <tbody>
-                        {props.map((board)=>(
+                        {boardList.map((board)=>(
                         <tr>
                             <td>{board.seq}</td>
-                            <td><Link to={`/detail/${board.seq}/${board.subject}/${board.content}`}
-                            
-                            >{board.subject}</Link></td>
+                            <td>
+                                <Link to={`/detail/${board.seq}`}>
+                                {board.subject}
+                                </Link>
+                            </td>
                             <td>{board.reg_user}</td>
                             <td>{board.reg_date}</td>
                         </tr>
