@@ -45,19 +45,19 @@ function WriteForm(props){
 
     return (
         <div>
-            제목<input 
+            title<input 
             type="text" 
             value={subject}
             onChange={subjectChange}
             /><br/>
-            작성자
+            user
             <input 
             type="text" 
             value={reg_user}
             onChange={reg_userChange}
             />
             <br/>
-            내용
+            content
             <textarea
             onChange={contentChange}
             >

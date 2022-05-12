@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../static/list.css";
+import axios from "axios";
 
 function List({props}) {
 
@@ -28,29 +29,26 @@ function List({props}) {
         setBoardList(boardArray);
 
     },[]);
+    */
     const listCall = async()=>{
         let data = await axios({
-            method : 'post',
+            method : 'get',
             url : 'act/listCall',
             headers : {'Content-Type':'application/json'}
         });
-        setBoardList(data);
+        setBoardList(data.data);
         console.log(boardList);
     }
-    */
-    //listCall();
+    useEffect(()=>{
+        listCall();
+    }
+    ,[]);
+    
 
     
     
 
-    useEffect(function(){
-        fetch("act/listCall")
-        .then((res)=>(res.json()))
-        .then((data)=>setBoardList(data))
-        ;
 
-        
-    }, []);
 
 
 
@@ -60,32 +58,31 @@ function List({props}) {
 
     return ( 
         <div>
-            <Link to="/writeForm">
-                <input type="button" value="글쓰기"/>
+            <Link to={`/writeForm`}>
+                <input type="button" value="write" />
             </Link>
             <table>
                 <thead>
                     <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <th>seq</th>
+                        <th>title</th>
+                        <th>user</th>
+                        <th>date</th>
                     </tr>
                 </thead>
                 <tbody>
-                        {boardList.map((board)=>(
-                        <tr>
+                    {boardList.map((board)=>(
+                        <tr key={board.seq}>
                             <td>{board.seq}</td>
-                            <td>
-                                <Link to={`/detail/${board.seq}`}>
-                                {board.subject}
-                                </Link>
-                            </td>
+                            <td><Link to={`/detail/${board.seq}`}>{board.subject}</Link></td>
                             <td>{board.reg_user}</td>
                             <td>{board.reg_date}</td>
                         </tr>
-                        ))}
+
+                    ))}
+                    
                 </tbody>
+
 
             </table>
 
